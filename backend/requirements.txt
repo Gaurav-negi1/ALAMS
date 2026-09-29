@@ -1,0 +1,12 @@
+flask==3.0.0
+flask-cors==4.0.0
+requests==2.31.0
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+pdfplumber
+pytesseract
+Pillow
+python-docx
+pandas
+openpyxl

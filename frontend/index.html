@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A-LAMS v3 — Academic Leave Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-sidebar {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid rgba(99, 102, 241, 0.15);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+      border-left: 3px solid #818cf8;
+    }
+
+    .nav-item:hover:not(.active) {
+      background: rgba(51, 65, 85, 0.5);
+      transform: translateX(4px);
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.8) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -8px rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .attachment-card {
+      background: rgba(51, 65, 85, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .attachment-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.3);
+    }
+
+    .pdf-viewer {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 12px;
+    }
+
+    .image-preview {
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .page {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .page.hidden {
+      display: none !important;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    }
+
+    .table-header {
+      background: rgba(51, 65, 85, 0.5);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .table-row {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      transition: all 0.2s ease;
+    }
+
+    .table-row:hover {
+      background: rgba(51, 65, 85, 0.3);
+    }
+
+    .dark-input {
+      background: rgba(51, 65, 85, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #e2e8f0;
+      transition: all 0.2s ease;
+    }
+
+    .dark-input:focus {
+      outline: none;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      background: rgba(51, 65, 85, 0.8);
+    }
+
+    .dark-input::placeholder {
+      color: #64748b;
+    }
+
+    .dark-select {
+      background: rgba(51, 65, 85, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #e2e8f0;
+      backdrop-filter: blur(8px);
+    }
+
+    .dark-select option {
+      background: #1e293b;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -4px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -4px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -4px rgba(244, 63, 94, 0.4);
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+    }
+
+    .btn-warning:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -4px rgba(245, 158, 11, 0.4);
+    }
+
+    .badge-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-danger {
+      background: rgba(244, 63, 94, 0.15);
+      color: #fb7185;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .badge-info {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .override-console {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+    }
+
+    .status-dot {
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .pulse-success {
+      animation: pulse-success 2s infinite;
+    }
+
+    @keyframes pulse-success {
+      0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
+    }
+
+    .pulse-warning {
+      animation: pulse-warning 2s infinite;
+    }
+
+    @keyframes pulse-warning {
+      0% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+      }
+    }
+  </style>
+</head>
+
+<body class="text-slate-200">
+  <div class="flex h-screen">
+    <!-- Premium Sidebar -->
+    <div class="w-72 glass-sidebar">
+      <div class="p-6">
+        <div class="flex items-center gap-3 mb-8">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <i class="fas fa-robot text-white text-xl"></i>
+          </div>
+          <div>
+            <h1 class="text-xl font-bold gradient-text">A-LAMS v3</h1>
+            <p class="text-xs text-slate-400">AI-Powered Assistant</p>
+          </div>
+        </div>
+
+        <!-- System Status Panel -->
+        <div class="glass-card rounded-xl p-4 mb-6">
+          <div class="text-xs text-slate-400 mb-3 font-medium tracking-wider">SYSTEM STATUS</div>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm flex items-center gap-2">
+                <i class="fas fa-brain text-indigo-400"></i>
+                Groq
+              </span>
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 status-dot pulse-success"></span>
+                <span class="text-xs text-emerald-400 font-medium" id="sidebar-groq-text">Active</span>
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm flex items-center gap-2">
+                <i class="fab fa-google text-blue-400"></i>
+                Gemini
+              </span>
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full" id="sidebar-gemini-status"></span>
+                <span class="text-xs" id="sidebar-gemini-text">Checking...</span>
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm flex items-center gap-2">
+                <i class="fas fa-envelope text-rose-400"></i>
+                Gmail
+              </span>
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full" id="sidebar-gmail-status"></span>
+                <span class="text-xs" id="sidebar-gmail-text">Checking...</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="space-y-1">
+          <a href="#" onclick="showPage('dashboard'); return false;"
+            class="nav-item active flex items-center px-4 py-3 rounded-lg text-slate-300">
+            <i class="fas fa-chart-pie w-6 text-indigo-400"></i>
+            <span class="font-medium">Dashboard</span>
+          </a>
+          <a href="#" onclick="showPage('inbox'); return false;"
+            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+            <i class="fas fa-inbox w-6 text-blue-400"></i>
+            <span class="font-medium">Smart Inbox</span>
+          </a>
+          <a href="#" onclick="showPage('students'); return false;"
+            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+            <i class="fas fa-users w-6 text-emerald-400"></i>
+            <span class="font-medium">Student Hub</span>
+          </a>
+          <a href="#" onclick="showPage('settings'); return false;"
+            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+            <i class="fas fa-cog w-6 text-purple-400"></i>
+            <span class="font-medium">Settings</span>
+          </a>
+          <a href="#" onclick="showPage('policies'); return false;"
+            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+            <i class="fas fa-shield-alt w-6 text-amber-400"></i>
+            <span class="font-medium">Policies</span>
+          </a>
+          <a href="#" onclick="showPage('database-view'); return false;"
+            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+            <i class="fas fa-database w-6 text-teal-400"></i>
+            <span class="font-medium">Database</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Quick Action Footer -->
+      <div class="absolute bottom-0 left-0 w-72 p-6 border-t border-slate-700/50">
+        <button onclick="fetchNow()"
+          class="w-full btn-primary px-4 py-3 rounded-xl flex items-center justify-center gap-2">
+          <i class="fas fa-bolt"></i>
+          <span>Quick Fetch Emails</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <div class="flex-1 overflow-auto p-8">
+
+      <!-- Dashboard Page -->
+      <div id="dashboard-page" class="page">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-3xl font-bold gradient-text">Dashboard</h2>
+            <p class="text-slate-400 mt-1">Real-time overview of your academic communication system</p>
+          </div>
+          <button onclick="fetchNow()" class="btn-primary px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-sync-alt"></i>
+            <span>Sync Now</span>
+          </button>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-4 gap-6 mb-8">
+          <div class="stat-card rounded-xl p-6 cursor-pointer" onclick="showPage('inbox')">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-envelope text-2xl text-indigo-400"></i>
+              </div>
+            </div>
+            <p class="text-slate-400 text-sm mb-1">Total Processed</p>
+            <p class="text-4xl font-bold text-white" id="stat-total">0</p>
+          </div>
+
+          <div class="stat-card rounded-xl p-6 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-check-circle text-2xl text-emerald-400"></i>
+              </div>
+            </div>
+            <p class="text-slate-400 text-sm mb-1">Approved</p>
+            <p class="text-4xl font-bold text-emerald-400" id="stat-approved">0</p>
+          </div>
+
+          <div class="stat-card rounded-xl p-6 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-clock text-2xl text-amber-400"></i>
+              </div>
+            </div>
+            <p class="text-slate-400 text-sm mb-1">Pending</p>
+            <p class="text-4xl font-bold text-amber-400" id="stat-pending">0</p>
+          </div>
+
+          <div class="stat-card rounded-xl p-6 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-paperclip text-2xl text-blue-400"></i>
+              </div>
+            </div>
+            <p class="text-slate-400 text-sm mb-1">With Attachments</p>
+            <p class="text-4xl font-bold text-blue-400" id="stat-attachments">0</p>
+          </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="glass-card rounded-xl p-6 mb-8">
+          <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+            <i class="fas fa-heartbeat text-rose-400"></i>
+            System Status
+          </h3>
+          <div class="grid grid-cols-3 gap-6">
+            <div class="flex items-center gap-3">
+              <span class="w-3 h-3 rounded-full bg-emerald-400 status-dot pulse-success"></span>
+              <span class="font-medium">Groq API (LLaMA 3.3 70B)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-3 h-3 rounded-full" id="status-gemini"></span>
+              <span class="font-medium">Gemini API (Vision & PDF)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-3 h-3 rounded-full" id="status-gmail"></span>
+              <span class="font-medium">Gmail Connection</span>
+            </div>
+          </div>
+          <div class="mt-4 text-sm text-slate-400" id="poller-status"></div>
+        </div>
+
+        <!-- Recent Emails -->
+        <div class="glass-card rounded-xl p-6">
+          <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+            <i class="fas fa-clock-rotate-left text-indigo-400"></i>
+            Recent Activity
+          </h3>
+          <div id="recent-emails"></div>
+        </div>
+      </div>
+      <!-- END Dashboard Page -->
+
+      <!-- Inbox Page -->
+      <div id="inbox-page" class="page hidden">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-3xl font-bold gradient-text">Smart Inbox</h2>
+            <p class="text-slate-400 mt-1">AI-classified emails ready for review</p>
+          </div>
+          <button onclick="fetchNow()" class="btn-primary px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-sync-alt"></i>
+            <span>Fetch Now</span>
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="glass-card rounded-xl p-4 mb-6">
+          <div class="flex gap-4">
+            <select id="filter-intent" class="dark-select rounded-lg px-4 py-2.5 flex-1">
+              <option value="">All Intents</option>
+              <option value="medical_leave">Medical Leave</option>
+              <option value="personal_leave">Personal Leave</option>
+              <option value="on_duty">On Duty</option>
+              <option value="attendance_correction">Attendance Correction</option>
+              <option value="general_query">General Query</option>
+              <option value="no_action_needed">No Action Needed</option>
+            </select>
+            <select id="filter-decision" class="dark-select rounded-lg px-4 py-2.5 flex-1">
+              <option value="">All Decisions</option>
+              <option value="APPROVE">Approved</option>
+              <option value="REJECT">Rejected</option>
+              <option value="PENDING">Pending</option>
+              <option value="NO_ACTION">No Action</option>
+            </select>
+            <button onclick="loadInbox()" class="btn-primary px-6 py-2.5 rounded-lg">
+              <i class="fas fa-filter mr-2"></i>Apply
+            </button>
+            <button onclick="clearFilters()"
+              class="px-6 py-2.5 rounded-lg border border-slate-600 hover:bg-slate-700/50">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div id="inbox-list" class="glass-card rounded-xl p-4"></div>
+        <div class="mt-4 flex justify-center gap-2" id="pagination"></div>
+      </div>
+      <!-- END Inbox Page -->
+
+      <!-- Email Detail Page -->
+      <div id="email-detail-page" class="page hidden">
+        <button onclick="showPage('inbox'); return false;"
+          class="mb-4 text-indigo-400 hover:text-indigo-300 flex items-center gap-2">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back to Inbox</span>
+        </button>
+        <div id="email-detail-content" class="glass-card rounded-xl p-6"></div>
+      </div>
+      <!-- END Email Detail Page -->
+
+      <!-- Students Page -->
+      <div id="students-page" class="page hidden">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-3xl font-bold gradient-text">Student Hub</h2>
+            <p class="text-slate-400 mt-1">Manage student records and attendance</p>
+          </div>
+          <button onclick="seedDemoData()" class="btn-success px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-database"></i>
+            <span>Load Demo Data</span>
+          </button>
+          <button onclick="clearAllStudents()" class="btn-danger px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-trash"></i>
+            <span>Clear All Students</span>
+          </button>
+        </div>
+        <div class="glass-card rounded-xl p-6">
+          <div id="students-list"></div>
+        </div>
+      </div>
+      <!-- END Students Page -->
+
+      <!-- Settings Page (self-contained, no nested pages) -->
+      <div id="settings-page" class="page hidden">
+        <h2 class="text-3xl font-bold gradient-text mb-8">Settings</h2>
+
+        <div class="glass-card rounded-xl p-6 space-y-8">
+          <!-- API Status Overview -->
+          <div class="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 p-6 rounded-xl border border-indigo-500/20">
+            <h3 class="font-bold text-lg mb-4">API Status</h3>
+            <div class="grid grid-cols-3 gap-6">
+              <div class="text-center">
+                <div class="text-3xl mb-2" id="api-status-groq-icon">⏳</div>
+                <div class="font-medium text-lg">Groq</div>
+                <div class="text-sm text-slate-400" id="api-status-groq-text">Not configured</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl mb-2" id="api-status-gemini-icon">⏳</div>
+                <div class="font-medium text-lg">Gemini</div>
+                <div class="text-sm text-slate-400" id="api-status-gemini-text">Not configured</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl mb-2" id="api-status-gmail-icon">⏳</div>
+                <div class="font-medium text-lg">Gmail</div>
+                <div class="text-sm text-slate-400" id="api-status-gmail-text">Not connected</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Groq API -->
+          <div class="border border-slate-700 rounded-xl p-6">
+            <label class="block text-sm font-medium mb-3 text-slate-300">
+              <i class="fas fa-brain text-indigo-400 mr-2"></i>
+              Groq API Key
+            </label>
+            <div class="flex gap-3">
+              <input type="password" id="groq-key" class="dark-input flex-1 rounded-lg px-4 py-3"
+                placeholder="Enter Groq API Key">
+              <button onclick="togglePassword('groq-key')"
+                class="px-4 py-3 border border-slate-600 rounded-lg hover:bg-slate-700/50">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <p class="text-sm text-slate-400 mt-2">
+              Get your key from <a href="https://console.groq.com" target="_blank"
+                class="text-indigo-400 hover:underline">console.groq.com</a>
+              <span class="ml-2 text-xs bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-full">LLaMA 3.3 70B</span>
+            </p>
+          </div>
+
+          <!-- Gemini API -->
+          <div class="border border-slate-700 rounded-xl p-6 bg-gradient-to-r from-blue-500/5 to-transparent">
+            <label class="block text-sm font-medium mb-3 text-slate-300">
+              <i class="fab fa-google text-blue-400 mr-2"></i>
+              Gemini API Key
+              <span class="ml-2 text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">Vision & PDF
+                Analysis</span>
+            </label>
+            <div class="flex gap-3">
+              <input type="password" id="gemini-key" class="dark-input flex-1 rounded-lg px-4 py-3"
+                placeholder="Enter Gemini API Key">
+              <button onclick="togglePassword('gemini-key')"
+                class="px-4 py-3 border border-slate-600 rounded-lg hover:bg-slate-700/50">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button onclick="testGemini()" class="btn-primary px-6 py-3 rounded-lg">
+                <i class="fas fa-vial mr-2"></i>Test Key
+              </button>
+            </div>
+            <p class="text-sm text-slate-400 mt-2">
+              Get your free key from <a href="https://aistudio.google.com/app/apikey" target="_blank"
+                class="text-indigo-400 hover:underline">aistudio.google.com</a>
+            </p>
+          </div>
+
+          <!-- Gmail Connection -->
+          <div class="border border-slate-700 rounded-xl p-6">
+            <label class="block text-sm font-medium mb-3 text-slate-300">
+              <i class="fas fa-envelope text-rose-400 mr-2"></i>
+              Gmail Connection
+            </label>
+            <div class="space-y-4">
+              <div class="flex gap-3">
+                <button onclick="connectGmail()" class="btn-danger px-6 py-3 rounded-lg">
+                  <i class="fab fa-google mr-2"></i>1. Run OAuth Setup
+                </button>
+                <button onclick="clearGmailToken()"
+                  class="px-6 py-3 border border-rose-500 text-rose-400 rounded-lg hover:bg-rose-500/10">
+                  <i class="fas fa-trash mr-2"></i>Clear Token
+                </button>
+              </div>
+              <textarea id="gmail-token" class="dark-input w-full rounded-lg px-4 py-3 font-mono text-sm" rows="4"
+                placeholder="2. Paste Gmail token JSON here"></textarea>
+              <button onclick="saveGmailToken()" class="btn-primary px-6 py-3 rounded-lg">
+                <i class="fas fa-save mr-2"></i>3. Save Token
+              </button>
+            </div>
+          </div>
+
+          <!-- Automation Settings -->
+          <div class="border border-slate-700 rounded-xl p-6">
+            <h3 class="font-bold text-lg mb-4">Automation Settings</h3>
+            <div class="space-y-4">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" id="auto-poll" class="w-5 h-5 rounded bg-slate-700 border-slate-600">
+                <span>Auto-fetch emails</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" id="auto-reply" class="w-5 h-5 rounded bg-slate-700 border-slate-600">
+                <span>Auto-reply to emails</span>
+              </label>
+              <div>
+                <label class="block text-sm font-medium mb-2">Poll Interval (minutes)</label>
+                <input type="number" id="poll-interval" min="1" max="60" class="dark-input rounded-lg px-4 py-3 w-32">
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4">
+            <button onclick="saveSettings()" class="btn-primary px-8 py-3 rounded-xl text-lg">
+              <i class="fas fa-save mr-2"></i>Save All Settings
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- END Settings Page -->
+
+      <!-- ==================== Policy Manager Page (sibling, not nested) ==================== -->
+      <div id="policies-page" class="page hidden">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-3xl font-bold gradient-text">Policy Manager</h2>
+            <p class="text-slate-400 mt-1">Configure academic policies and automation rules</p>
+          </div>
+          <button onclick="reloadPolicies()" class="btn-primary px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-sync-alt"></i><span>Reload Policies</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <div class="glass-card rounded-xl p-6">
+            <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+              <i class="fas fa-calendar-check text-emerald-400"></i>Leave Policies
+            </h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium mb-2 text-slate-300">Minimum Attendance (%)</label>
+                <input type="number" id="policy-min-attendance" class="dark-input w-full rounded-lg px-4 py-3" min="0"
+                  max="100" step="0.1" value="75.0">
+                <p class="text-xs text-slate-400 mt-1">Students below this cannot get leave approved</p>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2 text-slate-300">Critical Attendance (%)</label>
+                <input type="number" id="policy-critical-attendance" class="dark-input w-full rounded-lg px-4 py-3"
+                  min="0" max="100" step="0.1" value="65.0">
+                <p class="text-xs text-slate-400 mt-1">Auto-reject all leave requests below this</p>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2 text-slate-300">Max Medical Leave Days</label>
+                <input type="number" id="policy-max-medical-days" class="dark-input w-full rounded-lg px-4 py-3" min="1"
+                  max="30" value="5">
+                <p class="text-xs text-slate-400 mt-1">Without HOD approval</p>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2 text-slate-300">Max Personal Leave Days</label>
+                <input type="number" id="policy-max-personal-days" class="dark-input w-full rounded-lg px-4 py-3"
+                  min="1" max="30" value="3">
+                <p class="text-xs text-slate-400 mt-1">Per semester</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-6">
+            <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+              <i class="fas fa-robot text-purple-400"></i>Automation Policies
+            </h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                <div>
+                  <p class="font-medium">Auto-fetch Emails</p>
+                  <p class="text-xs text-slate-400">Automatically check for new emails</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="policy-auto-poll-enabled" class="sr-only peer">
+                  <div
+                    class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600">
+                  </div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                <div>
+                  <p class="font-medium">Auto-reply to Emails</p>
+                  <p class="text-xs text-slate-400">Send automatic responses</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="policy-auto-reply-enabled" class="sr-only peer">
+                  <div
+                    class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600">
+                  </div>
+                </label>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2 text-slate-300">Poll Interval (minutes)</label>
+                <input type="number" id="policy-poll-interval-minutes" class="dark-input w-full rounded-lg px-4 py-3"
+                  min="1" max="60" value="5">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <button onclick="savePolicies()" class="btn-primary px-8 py-3 rounded-xl text-lg w-full">
+            <i class="fas fa-save mr-2"></i>Save All Policies
+          </button>
+        </div>
+        <div id="policy-status" class="mt-4 text-center hidden"></div>
+      </div>
+      <!-- END Policy Manager Page -->
+
+      <!-- ==================== Database View Page (sibling, not nested) ==================== -->
+      <div id="database-view-page" class="page hidden">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-3xl font-bold gradient-text">Database Management</h2>
+            <p class="text-slate-400 mt-1">Student records, emails, and attendance data</p>
+          </div>
+          <div class="flex gap-3">
+            <button onclick="document.getElementById('excel-upload').click()"
+              class="btn-success px-6 py-3 rounded-xl flex items-center gap-2">
+              <i class="fas fa-upload"></i><span>Import Excel</span>
+            </button>
+            <input type="file" id="excel-upload" accept=".xlsx,.xls" class="hidden" onchange="importExcelFile(this)">
+            <button onclick="exportStudentsExcel()" class="btn-primary px-6 py-3 rounded-xl flex items-center gap-2">
+              <i class="fas fa-download"></i><span>Export Excel</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="stat-card rounded-xl p-6 text-center">
+            <i class="fas fa-envelope text-3xl text-indigo-400 mb-2"></i>
+            <p class="text-2xl font-bold" id="db-total-emails">0</p>
+            <p class="text-sm text-slate-400">Total Emails</p>
+          </div>
+          <div class="stat-card rounded-xl p-6 text-center">
+            <i class="fas fa-users text-3xl text-emerald-400 mb-2"></i>
+            <p class="text-2xl font-bold" id="db-total-students">0</p>
+            <p class="text-sm text-slate-400">Total Students</p>
+          </div>
+          <div class="stat-card rounded-xl p-6 text-center">
+            <i class="fas fa-paperclip text-3xl text-blue-400 mb-2"></i>
+            <p class="text-2xl font-bold" id="db-total-attachments">0</p>
+            <p class="text-sm text-slate-400">Attachments</p>
+          </div>
+          <div class="stat-card rounded-xl p-6 text-center">
+            <i class="fas fa-chart-bar text-3xl text-purple-400 mb-2"></i>
+            <p class="text-2xl font-bold" id="db-avg-attendance">0%</p>
+            <p class="text-sm text-slate-400">Avg Attendance</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-4 mb-6">
+          <div class="flex gap-4">
+            <div class="flex-1 relative">
+              <i class="fas fa-search absolute left-3 top-3 text-slate-400"></i>
+              <input type="text" id="db-search" placeholder="Search by name, email, USN, subject..."
+                class="w-full bg-slate-700 border border-slate-600 rounded-lg pl-10 pr-4 py-2"
+                onkeyup="loadDatabaseView()">
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-4">
+          <h3 class="font-bold text-lg mb-4">Email & Attendance Records</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="table-header">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Student</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">USN/ID</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Subject</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Intent</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Decision</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Attendance</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Date</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="db-emails-table" class="divide-y divide-slate-700">
+                <tr>
+                  <td colspan="8" class="px-4 py-8 text-center text-slate-400">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4 flex justify-center gap-2" id="db-pagination"></div>
+        </div>
+      </div>
+      <!-- END Database View Page -->
+
+    </div>
+    <!-- ==================== END MAIN CONTENT AREA ==================== -->
+
+  </div>
+  <!-- End of flex h-screen -->
+
+  <!-- Attachment Viewer Modal -->
+  <div id="attachment-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50"
+    onclick="closeAttachmentModalOnBackdrop(event)">
+    <div class="glass-card rounded-xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div class="p-4 border-b border-slate-700 flex justify-between items-center">
+        <h3 class="font-bold text-lg flex items-center gap-2">
+          <i class="fas fa-paperclip text-indigo-400"></i>
+          <span id="attachment-filename">Attachment</span>
+        </h3>
+        <div class="flex gap-2">
+          <button onclick="downloadCurrentAttachment()" class="btn-success px-4 py-2 rounded-lg">
+            <i class="fas fa-download mr-2"></i>Download
+          </button>
+          <button onclick="closeAttachmentModal()" class="px-4 py-2 rounded-lg hover:bg-slate-700/50">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="p-4 overflow-auto flex-1" id="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    // ========== GLOBAL VARIABLES ==========
+    let currentPage = 'dashboard';
+    let currentMessageId = null;
+    let currentAttachmentId = null;
+    let currentPageNum = 1;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      loadConfig();
+      loadStats();
+      loadDashboard();
+      loadStatus();
+      setInterval(loadStatus, 30000);
+    });
+
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+
+      const pageId = page === 'email-detail' ? 'email-detail-page' : page + '-page';
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+      }
+
+      document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
+      const navLinks = document.querySelectorAll('.nav-item');
+      navLinks.forEach(link => {
+        if (link.textContent.toLowerCase().includes(page.replace('-', ' '))) {
+          link.classList.add('active');
+        }
+      });
+
+      currentPage = page;
+
+      if (page === 'dashboard') loadDashboard();
+      if (page === 'inbox') loadInbox();
+      if (page === 'students') loadStudents();
+      if (page === 'settings') loadConfig();
+      if (page === 'policies') loadPolicies();
+      if (page === 'database-view') loadDatabaseView();
+    }
+
+    async function loadConfig() {
+      try {
+        const res = await fetch('/api/config');
+        const cfg = await res.json();
+
+        document.getElementById('auto-poll').checked = cfg.auto_poll;
+        document.getElementById('auto-reply').checked = cfg.auto_reply;
+        document.getElementById('poll-interval').value = cfg.poll_interval_minutes;
+
+        if (cfg.groq_key_set) {
+          document.getElementById('groq-key').placeholder = '✓ Groq API key is set';
+          document.getElementById('api-status-groq-icon').textContent = '✅';
+          document.getElementById('api-status-groq-text').textContent = 'Connected';
+        } else {
+          document.getElementById('api-status-groq-icon').textContent = '❌';
+          document.getElementById('api-status-groq-text').textContent = 'Not configured';
+        }
+
+        if (cfg.gemini_key_set) {
+          document.getElementById('gemini-key').placeholder = '✓ Gemini API key is set';
+          document.getElementById('api-status-gemini-icon').textContent = '✅';
+          document.getElementById('api-status-gemini-text').textContent = 'Connected';
+        } else {
+          document.getElementById('api-status-gemini-icon').textContent = '❌';
+          document.getElementById('api-status-gemini-text').textContent = 'Not configured';
+        }
+
+        if (cfg.gmail_connected) {
+          document.querySelector('#gmail-token').placeholder = '✓ Gmail is connected';
+          document.getElementById('api-status-gmail-icon').textContent = '✅';
+          document.getElementById('api-status-gmail-text').textContent = 'Connected';
+        } else {
+          document.getElementById('api-status-gmail-icon').textContent = '❌';
+          document.getElementById('api-status-gmail-text').textContent = 'Not connected';
+        }
+
+        document.getElementById('poller-status').textContent = cfg.poller_status || 'Idle';
+      } catch (e) {
+        console.error('Failed to load config:', e);
+      }
+    }
+
+    // ========== POLICY MANAGEMENT ==========
+
+    async function loadPolicies() {
+      try {
+        const res = await fetch('/api/policies');
+        const data = await res.json();
+        if (data.success) {
+          data.policies.forEach(policy => {
+            const elementId = `policy-${policy.policy_key.replace(/_/g, '-')}`;
+            const element = document.getElementById(elementId);
+            if (element) {
+              if (element.type === 'checkbox') {
+                element.checked = policy.policy_value === 'true' || policy.policy_value === true;
+              } else {
+                element.value = policy.policy_value;
+              }
+            }
+          });
+        }
+      } catch (e) {
+        console.error('Failed to load policies:', e);
+      }
+    }
+
+    async function savePolicies() {
+      const policies = {
+        min_attendance: document.getElementById('policy-min-attendance').value,
+        critical_attendance: document.getElementById('policy-critical-attendance').value,
+        max_medical_days: document.getElementById('policy-max-medical-days').value,
+        max_personal_days: document.getElementById('policy-max-personal-days').value,
+        auto_poll_enabled: document.getElementById('policy-auto-poll-enabled').checked,
+        auto_reply_enabled: document.getElementById('policy-auto-reply-enabled').checked,
+        poll_interval_minutes: document.getElementById('policy-poll-interval-minutes').value
+      };
+
+      try {
+        const res = await fetch('/api/policies', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ policies })
+        });
+        const data = await res.json();
+        const statusDiv = document.getElementById('policy-status');
+        statusDiv.classList.remove('hidden');
+        if (data.success) {
+          statusDiv.innerHTML = '<div class="bg-emerald-500/20 text-emerald-400 p-4 rounded-lg">✓ Policies saved and reloaded successfully!</div>';
+        } else {
+          statusDiv.innerHTML = `<div class="bg-rose-500/20 text-rose-400 p-4 rounded-lg">❌ ${data.error || 'Failed'}</div>`;
+        }
+        setTimeout(() => statusDiv.classList.add('hidden'), 3000);
+      } catch (e) {
+        alert('Failed to save policies: ' + e.message);
+      }
+    }
+
+    async function reloadPolicies() {
+      try {
+        const res = await fetch('/api/policies/reload', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          alert('✓ Policies reloaded!');
+          loadPolicies();
+        }
+      } catch (e) {
+        alert('Failed: ' + e.message);
+      }
+    }
+
+    // ========== EXCEL IMPORT/EXPORT ==========
+
+    async function importExcelFile(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        const res = await fetch('/api/students/import-excel', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+          alert('✓ ' + data.message);
+          loadDatabaseView();
+          loadStudents();
+        } else {
+          alert('❌ ' + (data.error || 'Import failed'));
+        }
+      } catch (e) {
+        alert('Import failed: ' + e.message);
+      }
+      input.value = '';
+    }
+
+    function exportStudentsExcel() {
+      window.open('/api/students/export-excel', '_blank');
+    }
+
+    // ========== DATABASE VIEW ==========
+
+    async function loadDatabaseStats() {
+      try {
+        const res = await fetch('/api/database/stats');
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('db-total-emails').textContent = data.stats.total_emails || 0;
+          document.getElementById('db-total-students').textContent = data.stats.total_students || 0;
+          document.getElementById('db-total-attachments').textContent = data.stats.total_attachments || 0;
+          if (data.stats.attendance_summary) {
+            document.getElementById('db-avg-attendance').textContent =
+              (data.stats.attendance_summary.avg_attendance || 0).toFixed(1) + '%';
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load DB stats:', e);
+      }
+    }
+
+    async function loadDatabaseView(page = 1) {
+      await loadDatabaseStats();
+      const search = document.getElementById('db-search')?.value || '';
+      try {
+        const params = new URLSearchParams({ search, page, limit: 50 });
+        const res = await fetch('/api/database/emails?' + params);
+        const data = await res.json();
+        const tbody = document.getElementById('db-emails-table');
+        if (!data.emails || data.emails.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-slate-400">No records found</td></tr>';
+          return;
+        }
+        tbody.innerHTML = data.emails.map(e => `
+          <tr class="table-row hover:bg-slate-700/30 cursor-pointer" onclick="viewStudentAttendance('${e.student_email}')">
+            <td class="px-4 py-3">
+              <div class="font-medium text-slate-200">${e.student_name || 'Unknown'}</div>
+              <div class="text-xs text-slate-400">${e.student_email}</div>
+            </td>
+            <td class="px-4 py-3 font-mono text-sm text-slate-300">${e.student_id || 'N/A'}</td>
+            <td class="px-4 py-3 text-slate-300">${e.subject}</td>
+            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full text-xs ${getIntentClass(e.intent)}">${formatIntent(e.intent)}</span></td>
+            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full text-xs ${getDecisionClass(e.decision)}">${e.decision}</span></td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-700 rounded-full h-2">
+                  <div class="bg-${(e.attendance_percentage || 75) >= 75 ? 'emerald' : (e.attendance_percentage || 75) >= 65 ? 'amber' : 'rose'}-400 h-2 rounded-full"
+                       style="width: ${e.attendance_percentage || 75}%"></div>
+                </div>
+                <span class="text-sm">${e.attendance_percentage || 75}%</span>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-sm text-slate-400">${formatDate(e.timestamp)}</td>
+            <td class="px-4 py-3">
+              <button onclick="event.stopPropagation(); viewEmail('${e.message_id}')" class="text-indigo-400 hover:text-indigo-300"><i class="fas fa-eye"></i></button>
+            </td>
+          </tr>
+        `).join('');
+        const totalPages = Math.ceil(data.total / data.limit);
+        if (totalPages > 1) {
+          document.getElementById('db-pagination').innerHTML = `
+            <button ${page === 1 ? 'disabled' : ''} onclick="loadDatabaseView(${page - 1})" class="px-4 py-2 rounded-lg border border-slate-600">◀</button>
+            <span class="px-4 py-2">Page ${page} of ${totalPages}</span>
+            <button ${page === totalPages ? 'disabled' : ''} onclick="loadDatabaseView(${page + 1})" class="px-4 py-2 rounded-lg border border-slate-600">▶</button>
+          `;
+        }
+      } catch (e) {
+        console.error('Failed to load DB view:', e);
+      }
+    }
+
+    async function viewStudentAttendance(email) {
+      try {
+        const res = await fetch(`/api/students/${email}/attendance`);
+        const data = await res.json();
+        if (data.success) {
+          const student = data.data.student;
+          const logs = data.data.attendance_log;
+          const leaves = data.data.leave_history;
+          let message = `📋 Student: ${student?.name || 'Unknown'}\n`;
+          message += `📧 Email: ${email}\n`;
+          message += `🆔 USN: ${student?.student_id || 'N/A'}\n`;
+          message += `📊 Attendance: ${student?.attendance_percentage || 75}%\n\n`;
+          message += `📝 Recent Attendance:\n`;
+          logs.slice(0, 5).forEach(log => {
+            message += `  • ${log.date}: ${log.status} - ${log.reason || 'N/A'}\n`;
+          });
+          message += `\n📧 Recent Leaves:\n`;
+          leaves.slice(0, 3).forEach(leave => {
+            message += `  • ${leave.subject}\n`;
+          });
+          alert(message);
+        }
+      } catch (e) {
+        alert('Failed: ' + e.message);
+      }
+    }
+
+    async function saveSettings() {
+      const data = {
+        groq_api_key: document.getElementById('groq-key').value || undefined,
+        gemini_api_key: document.getElementById('gemini-key').value || undefined,
+        auto_poll: document.getElementById('auto-poll').checked,
+        auto_reply: document.getElementById('auto-reply').checked,
+        poll_interval_minutes: parseInt(document.getElementById('poll-interval').value) || 5
+      };
+
+      try {
+        const res = await fetch('/api/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          alert('✓ Settings saved successfully!');
+          loadConfig();
+          loadStatus();
+          if (data.groq_api_key) document.getElementById('groq-key').value = '';
+          if (data.gemini_api_key) document.getElementById('gemini-key').value = '';
+        } else {
+          alert('Failed to save settings');
+        }
+      } catch (e) {
+        alert('Error saving settings: ' + e.message);
+      }
+    }
+
+    async function testGemini() {
+      const key = document.getElementById('gemini-key').value;
+      if (!key) {
+        alert('Please enter a Gemini API key first');
+        return;
+      }
+
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Testing...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/config/test-gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('✓ Gemini API key is valid and working!');
+        } else {
+          alert('✗ Invalid Gemini API key: ' + data.error);
+        }
+      } catch (e) {
+        alert('Error testing Gemini API: ' + e.message);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    async function clearGmailToken() {
+      if (confirm('Are you sure you want to disconnect Gmail?')) {
+        await fetch('/api/config/clear-gmail', { method: 'POST' });
+        document.getElementById('gmail-token').value = '';
+        document.getElementById('gmail-token').placeholder = 'Paste Gmail token JSON here';
+        loadConfig();
+        loadStatus();
+        alert('Gmail disconnected');
+      }
+    }
+
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    async function connectGmail() {
+      alert('Instructions:\n\n1. Open terminal in backend folder\n2. Run: python gmail_oauth_setup.py\n3. Complete Google login in browser\n4. Copy the entire token.json content\n5. Paste it in the textarea below\n6. Click "Save Token"');
+    }
+
+    async function saveGmailToken() {
+      const token = document.getElementById('gmail-token').value;
+      try {
+        const data = JSON.parse(token);
+        const res = await fetch('/api/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ gmail_token: data })
+        });
+        if (res.ok) {
+          alert('✓ Gmail connected successfully!');
+          document.getElementById('gmail-token').value = '';
+          loadConfig();
+          loadStatus();
+        } else {
+          alert('Failed to save token');
+        }
+      } catch (e) {
+        alert('Invalid JSON token. Please copy the entire token.json content.');
+      }
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const stats = await res.json();
+        document.getElementById('stat-total').textContent = stats.total || 0;
+        document.getElementById('stat-approved').textContent = stats.approved || 0;
+        document.getElementById('stat-pending').textContent = stats.pending || 0;
+        document.getElementById('stat-attachments').textContent = stats.with_attachments || 0;
+      } catch (e) {
+        console.error('Failed to load stats:', e);
+      }
+    }
+
+    async function loadStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const status = await res.json();
+
+        updateStatusDot('status-gemini', status.gemini_ready);
+        updateStatusDot('status-gmail', status.gmail_ready);
+        updateSidebarStatus('sidebar-gemini-status', 'sidebar-gemini-text', status.gemini_ready, 'Gemini');
+        updateSidebarStatus('sidebar-gmail-status', 'sidebar-gmail-text', status.gmail_ready, 'Gmail');
+
+        if (status.poller_status) {
+          document.getElementById('poller-status').innerHTML =
+            `<i class="fas fa-info-circle mr-1"></i>${status.poller_status}`;
+        }
+      } catch (e) {
+        console.error('Failed to load status:', e);
+      }
+    }
+
+    function updateStatusDot(id, ready) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.className = `w-3 h-3 rounded-full mr-2 status-dot ${ready ? 'bg-emerald-400 pulse-success' : 'bg-rose-400'}`;
+      }
+    }
+
+    function updateSidebarStatus(statusId, textId, ready, name) {
+      const statusEl = document.getElementById(statusId);
+      const textEl = document.getElementById(textId);
+      if (statusEl && textEl) {
+        if (ready) {
+          statusEl.className = 'w-2 h-2 rounded-full bg-emerald-400 status-dot pulse-success';
+          textEl.textContent = name === 'Gmail' ? 'Connected' : 'Active';
+          textEl.className = 'text-xs text-emerald-400 font-medium';
+        } else {
+          statusEl.className = 'w-2 h-2 rounded-full bg-rose-400';
+          textEl.textContent = name === 'Gmail' ? 'Disconnected' : 'Inactive';
+          textEl.className = 'text-xs text-rose-400 font-medium';
+        }
+      }
+    }
+
+    async function loadDashboard() {
+      await loadStats();
+      await loadStatus();
+
+      try {
+        const res = await fetch('/api/stats');
+        const stats = await res.json();
+        const recentDiv = document.getElementById('recent-emails');
+
+        if (stats.recent && stats.recent.length > 0) {
+          recentDiv.innerHTML = stats.recent.map(e => `
+            <div class="border-b border-slate-700 py-4 flex items-center justify-between hover:bg-slate-700/30 cursor-pointer rounded-lg px-3 transition-all" onclick="viewEmail('${e.message_id}')">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="font-medium text-slate-200">${e.student_name || e.student_email}</p>
+                  ${e.has_attachments ? '<i class="fas fa-paperclip text-slate-400 text-xs"></i>' : ''}
+                </div>
+                <p class="text-sm text-slate-400">${e.subject}</p>
+                <p class="text-xs mt-1 space-x-2">
+                  <span class="px-2 py-0.5 rounded-full text-xs ${getIntentClass(e.intent)}">${formatIntent(e.intent)}</span>
+                  <span class="px-2 py-0.5 rounded-full text-xs ${getDecisionClass(e.decision)}">${e.decision}</span>
+                </p>
+              </div>
+              <span class="text-sm text-slate-400">${formatDate(e.timestamp)}</span>
+            </div>
+          `).join('');
+        } else {
+          recentDiv.innerHTML = '<p class="text-slate-400 text-center py-8">No emails processed yet</p>';
+        }
+      } catch (e) {
+        console.error('Failed to load dashboard:', e);
+      }
+    }
+
+    async function loadInbox(page = 1) {
+      currentPageNum = page;
+      const intent = document.getElementById('filter-intent').value;
+      const decision = document.getElementById('filter-decision').value;
+
+      try {
+        const params = new URLSearchParams({ intent, decision, page, limit: 20 });
+        const res = await fetch('/api/inbox?' + params);
+        const data = await res.json();
+
+        const listDiv = document.getElementById('inbox-list');
+        if (data.emails.length === 0) {
+          listDiv.innerHTML = '<p class="p-8 text-center text-slate-400">No emails found</p>';
+          return;
+        }
+
+        listDiv.innerHTML = `
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="table-header">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">From</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Subject</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Intent</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Decision</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Attachments</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.emails.map(e => `
+                  <tr class="table-row cursor-pointer" onclick="viewEmail('${e.message_id}')">
+                    <td class="px-4 py-3">
+                      <div class="font-medium text-slate-200">${e.student_name || e.student_email}</div>
+                      <div class="text-xs text-slate-400">${e.student_email}</div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300">${e.subject}</td>
+                    <td class="px-4 py-3">
+                      <span class="px-2 py-1 rounded-full text-xs ${getIntentClass(e.intent)}">${formatIntent(e.intent)}</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="px-2 py-1 rounded-full text-xs ${getDecisionClass(e.decision)}">${e.decision}</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      ${e.attachment_count > 0 ?
+            `<span class="text-blue-400"><i class="fas fa-paperclip mr-1"></i>${e.attachment_count} file${e.attachment_count > 1 ? 's' : ''}</span>` :
+            '<span class="text-slate-500">—</span>'}
+                    </td>
+                    <td class="px-4 py-3 text-sm text-slate-400">${formatDate(e.timestamp)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+
+        const totalPages = Math.ceil(data.total / data.limit);
+        if (totalPages > 1) {
+          const paginationDiv = document.getElementById('pagination');
+          paginationDiv.innerHTML = `
+            <button ${page === 1 ? 'disabled' : ''} onclick="loadInbox(${page - 1})"
+              class="px-4 py-2 rounded-lg border border-slate-600 ${page === 1 ? 'text-slate-500' : 'hover:bg-slate-700/50'}">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="px-4 py-2 text-slate-300">Page ${page} of ${totalPages}</span>
+            <button ${page === totalPages ? 'disabled' : ''} onclick="loadInbox(${page + 1})"
+              class="px-4 py-2 rounded-lg border border-slate-600 ${page === totalPages ? 'text-slate-500' : 'hover:bg-slate-700/50'}">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          `;
+        }
+      } catch (e) {
+        console.error('Failed to load inbox:', e);
+      }
+    }
+    async function clearAllStudents() {
+      if (!confirm('Are you sure you want to delete ALL student records? This cannot be undone.')) return;
+      try {
+        const res = await fetch('/api/students/clear', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          alert('✓ All students deleted.');
+          loadStudents();
+          loadDatabaseView();
+        } else {
+          alert('❌ ' + (data.error || 'Failed'));
+        }
+      } catch (e) {
+        alert('Failed: ' + e.message);
+      }
+    }
+
+    function clearFilters() {
+      document.getElementById('filter-intent').value = '';
+      document.getElementById('filter-decision').value = '';
+      loadInbox();
+    }
+
+    function formatIntent(intent) {
+      if (!intent) return 'Unknown';
+      return intent.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    function getIntentClass(intent) {
+      const classes = {
+        'medical_leave': 'badge-danger',
+        'personal_leave': 'badge-warning',
+        'on_duty': 'badge-info',
+        'attendance_correction': 'bg-purple-500/20 text-purple-300 border border-purple-500/30',
+        'general_query': 'bg-slate-500/20 text-slate-300 border border-slate-500/30',
+        'no_action_needed': 'bg-slate-500/20 text-slate-400 border border-slate-500/30'
+      };
+      return classes[intent] || 'bg-slate-500/20 text-slate-300';
+    }
+
+    function getDecisionClass(decision) {
+      const classes = {
+        'APPROVE': 'badge-success',
+        'REJECT': 'badge-danger',
+        'PENDING': 'badge-warning',
+        'NO_ACTION': 'bg-slate-500/20 text-slate-300 border border-slate-500/30'
+      };
+      return classes[decision] || 'bg-slate-500/20 text-slate-300';
+    }
+
+    function formatDate(timestamp) {
+      if (!timestamp) return 'N/A';
+      const date = new Date(timestamp);
+      const now = new Date();
+      const diff = now - date;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      if (days === 0) return 'Today ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      if (days === 1) return 'Yesterday';
+      if (days < 7) return `${days} days ago`;
+      return date.toLocaleDateString();
+    }
+
+    async function viewEmail(messageId) {
+      currentMessageId = messageId;
+      try {
+        const res = await fetch(`/api/inbox/${messageId}`);
+        const email = await res.json();
+
+        const contentDiv = document.getElementById('email-detail-content');
+        contentDiv.innerHTML = `
+          <div class="space-y-6">
+            <div class="border-b border-slate-700 pb-4">
+              <h3 class="text-xl font-bold mb-2 text-slate-100">${email.subject}</h3>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-slate-300">
+                    <i class="fas fa-user mr-2 text-indigo-400"></i>
+                    ${email.student_name || 'Unknown'} &lt;${email.student_email}&gt;
+                  </p>
+                  <p class="text-slate-400 text-sm mt-1">
+                    <i class="far fa-clock mr-2"></i>
+                    ${email.timestamp ? new Date(email.timestamp).toLocaleString() : 'Unknown date'}
+                  </p>
+                </div>
+                <div class="flex gap-2">
+                  <span class="px-3 py-1.5 rounded-full text-sm ${getIntentClass(email.intent)}">${formatIntent(email.intent)}</span>
+                  <span class="px-3 py-1.5 rounded-full text-sm ${getDecisionClass(email.decision)}">${email.decision}</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
+                <i class="fas fa-envelope text-indigo-400"></i>
+                Email Body
+              </h4>
+              <div class="bg-slate-700/30 p-4 rounded-lg whitespace-pre-wrap text-slate-300 border border-slate-700">${email.body_snippet || '(No body content)'}</div>
+            </div>
+
+            ${email.attachments && email.attachments.length > 0 ? `
+              <div>
+                <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
+                  <i class="fas fa-paperclip text-blue-400"></i>
+                  Attachments (${email.attachments.length})
+                </h4>
+                <div class="grid gap-3">
+                  ${email.attachments.map((att, i) => `
+                    <div class="attachment-card rounded-lg p-4">
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                          <div class="text-2xl text-slate-400">
+                            <i class="fas ${getFileIcon(att.mime_type)}"></i>
+                          </div>
+                          <div>
+                            <p class="font-medium text-slate-200">${att.filename}</p>
+                            <p class="text-sm text-slate-400">${att.mime_type} • ${formatBytes(att.file_size)}</p>
+                          </div>
+                        </div>
+                        <div class="flex gap-2">
+                          <button onclick="viewAttachment(${att.id}, '${att.filename.replace(/'/g, "\\'")}', '${att.mime_type}')"
+                            class="px-3 py-1.5 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 text-sm">
+                            <i class="fas fa-eye mr-1"></i>View
+                          </button>
+                          <button onclick="downloadAttachment(${att.id})"
+                            class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg hover:bg-emerald-500/30 text-sm">
+                            <i class="fas fa-download mr-1"></i>Download
+                          </button>
+                        </div>
+                      </div>
+                      ${att.extracted_text ? `
+                        <div class="mt-3">
+                          <button onclick="toggleExtractedText(this)" class="text-sm text-indigo-400 hover:text-indigo-300">
+                            <i class="fas fa-chevron-right mr-1"></i>Show extracted text
+                          </button>
+                          <div class="hidden mt-2 text-sm text-slate-300 bg-slate-700/50 p-3 rounded max-h-40 overflow-auto border border-slate-600">
+                            ${att.extracted_text}
+                          </div>
+                        </div>
+                      ` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <div>
+              <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
+                <i class="fas fa-chart-line text-purple-400"></i>
+                AI Analysis
+              </h4>
+              <div class="grid grid-cols-2 gap-4 bg-slate-700/30 p-4 rounded-lg border border-slate-700">
+                <div>
+                  <p class="text-sm text-slate-400">Intent</p>
+                  <p class="font-medium text-slate-200">${formatIntent(email.intent)}</p>
+                </div>
+                <div>
+                  <p class="text-sm text-slate-400">Decision</p>
+                  <p class="font-medium text-slate-200">${email.decision}</p>
+                </div>
+                <div class="col-span-2">
+                  <p class="text-sm text-slate-400">Reason</p>
+                  <p class="font-medium text-slate-200">${email.decision_reason || 'N/A'}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PROFESSOR OVERRIDE CONSOLE -->
+            <div class="override-console rounded-xl p-5">
+              <h4 class="font-bold mb-4 text-purple-300 flex items-center gap-2">
+                <i class="fas fa-user-shield"></i>
+                Professor Override Console
+                <span class="text-xs bg-purple-500/30 text-purple-200 px-2 py-0.5 rounded-full">Admin Only</span>
+              </h4>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2 text-slate-300">Override Decision</label>
+                  <select id="override-decision-${email.message_id}" class="dark-select w-full rounded-lg px-4 py-3" onchange="previewOverrideReply('${email.message_id}')">
+                    <option value="APPROVE">✅ APPROVE - Grant the request</option>
+                    <option value="REJECT">❌ REJECT - Deny the request</option>
+                    <option value="PENDING">⏳ PENDING - Keep under review</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2 text-slate-300">Admin Notes</label>
+                  <textarea id="override-notes-${email.message_id}" class="dark-input w-full rounded-lg px-4 py-3" rows="3"
+                    placeholder="Reason for overriding the AI decision..." onkeyup="previewOverrideReply('${email.message_id}')"></textarea>
+                </div>
+
+                <!-- Reply Preview -->
+                <div class="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                  <label class="block text-sm font-medium mb-2 text-slate-300 flex items-center justify-between">
+                    <span><i class="fas fa-envelope mr-2"></i>Reply Preview</span>
+                    <span class="text-xs text-slate-400">Auto-generated based on decision</span>
+                  </label>
+                  <div id="override-reply-preview-${email.message_id}" class="text-sm text-slate-300 whitespace-pre-wrap max-h-48 overflow-auto p-3 bg-slate-800/50 rounded border border-slate-700">
+                    Select a decision and add notes to preview the reply...
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 p-3 bg-slate-700/30 rounded-lg">
+                  <input type="checkbox" id="send-reply-${email.message_id}" checked class="w-4 h-4 rounded">
+                  <label for="send-reply-${email.message_id}" class="text-sm text-slate-300">
+                    <i class="fas fa-paper-plane mr-1 text-emerald-400"></i>
+                    Send reply email to student
+                  </label>
+                </div>
+
+                <button onclick="executeOverride('${email.message_id}')"
+                  class="btn-warning w-full px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
+                  <i class="fas fa-gavel"></i>
+                  Execute Override & Update Database
+                </button>
+                <p class="text-xs text-slate-400 text-center">This will permanently override the AI decision, update attendance records, and send a new reply.</p>
+              </div>
+            </div>
+
+            ${email.decision !== 'NO_ACTION' && !email.replied ? `
+              <div>
+                <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
+                  <i class="fas fa-reply text-emerald-400"></i>
+                  Reply
+                </h4>
+                <textarea id="reply-text" class="dark-input w-full rounded-lg p-4 font-mono text-sm" rows="6">${email.reply_text || ''}</textarea>
+                <div class="mt-3">
+                  <button onclick="sendReply('${email.message_id}')" class="btn-primary px-6 py-3 rounded-lg">
+                    <i class="fas fa-paper-plane mr-2"></i>Send Reply
+                  </button>
+                </div>
+              </div>
+            ` : ''}
+            ${email.replied ? `
+              <div class="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
+                <p class="text-emerald-400"><i class="fas fa-check-circle mr-2"></i>Already replied</p>
+                <p class="mt-2 text-slate-300">${email.reply_text || 'Auto-reply sent'}</p>
+              </div>
+            ` : ''}
+          </div>
+        `;
+
+        showPage('email-detail');
+
+        setTimeout(() => {
+          if (currentMessageId) {
+            previewOverrideReply(currentMessageId);
+          }
+        }, 100);
+
+      } catch (e) {
+        console.error('Failed to view email:', e);
+        alert('Failed to load email details');
+      }
+    }
+
+    // ========== PROFESSOR OVERRIDE FUNCTIONS ==========
+
+    function previewOverrideReply(messageId) {
+      const decision = document.getElementById(`override-decision-${messageId}`)?.value || 'APPROVE';
+      const notes = document.getElementById(`override-notes-${messageId}`)?.value || '(No notes provided)';
+      const previewDiv = document.getElementById(`override-reply-preview-${messageId}`);
+
+      if (!previewDiv) return;
+
+      const studentNameElement = document.querySelector('#email-detail-content .text-slate-300');
+      const studentName = studentNameElement?.textContent?.split('&lt;')[0]?.trim() || 'Student';
+      const subjectElement = document.querySelector('#email-detail-content h3');
+      const subject = subjectElement?.textContent || 'your request';
+
+      let reply = '';
+
+      if (decision === 'APPROVE') {
+        reply = `Dear ${studentName},\n\nAfter a thorough review by the academic office, your request regarding "${subject}" has been **approved**.\n\n${notes}\n\nYour attendance records have been updated accordingly. We apologize for any confusion caused by the initial response.\n\nBest regards,\nAcademic Office\n[Approved by Professor Override]`;
+      } else if (decision === 'REJECT') {
+        reply = `Dear ${studentName},\n\nAfter a thorough review by the academic office, your request regarding "${subject}" has been **declined**.\n\n${notes}\n\nIf you believe this decision was made in error or have additional documentation to support your request, please contact the academic office directly.\n\nBest regards,\nAcademic Office\n[Reviewed by Professor Override]`;
+      } else {
+        reply = `Dear ${studentName},\n\nYour request regarding "${subject}" is currently **under review** by the academic office.\n\n${notes}\n\nWe will notify you once a final decision has been made. Please allow 1-2 business days for processing.\n\nBest regards,\nAcademic Office\n[Under Review - Professor Override]`;
+      }
+
+      previewDiv.textContent = reply;
+    }
+
+    async function executeOverride(messageId) {
+      const newDecision = document.getElementById(`override-decision-${messageId}`).value;
+      const adminNotes = document.getElementById(`override-notes-${messageId}`).value;
+      const sendReply = document.getElementById(`send-reply-${messageId}`)?.checked ?? true;
+
+      if (!adminNotes.trim()) {
+        alert('⚠️ Please provide admin notes explaining the override reason.');
+        return;
+      }
+
+      const previewReply = document.getElementById(`override-reply-preview-${messageId}`).textContent;
+
+      if (!confirm(`Confirm Override:\n\n• New Decision: ${newDecision}\n• Send Reply: ${sendReply ? 'Yes' : 'No'}\n\nNotes: ${adminNotes}\n\nReply Preview:\n${previewReply.substring(0, 200)}...\n\nProceed with override?`)) {
+        return;
+      }
+
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing Override...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/inbox/${messageId}/override`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            new_decision: newDecision,
+            admin_notes: adminNotes,
+            send_reply: sendReply
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          let message = `✓ Override successful!\n\nDecision changed to: ${newDecision}`;
+          if (data.reply_sent) {
+            message += `\n✓ Reply email sent to student`;
+          }
+          message += `\n\nDatabase and attendance records updated.`;
+          alert(message);
+
+          viewEmail(messageId);
+          loadStats();
+        } else {
+          alert('❌ Override failed: ' + (data.error || 'Unknown error'));
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
+      } catch (e) {
+        alert('❌ Override failed: ' + e.message);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function toggleExtractedText(btn) {
+      const div = btn.nextElementSibling;
+      const icon = btn.querySelector('i');
+      if (div.classList.contains('hidden')) {
+        div.classList.remove('hidden');
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        btn.innerHTML = btn.innerHTML.replace('Show', 'Hide');
+      } else {
+        div.classList.add('hidden');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        btn.innerHTML = btn.innerHTML.replace('Hide', 'Show');
+      }
+    }
+
+    function getFileIcon(mimeType) {
+      if (!mimeType) return 'fa-file';
+      if (mimeType.startsWith('image/')) return 'fa-file-image';
+      if (mimeType === 'application/pdf') return 'fa-file-pdf';
+      if (mimeType.includes('word')) return 'fa-file-word';
+      if (mimeType.includes('sheet') || mimeType.includes('excel')) return 'fa-file-excel';
+      if (mimeType.includes('presentation') || mimeType.includes('powerpoint')) return 'fa-file-powerpoint';
+      if (mimeType.startsWith('text/')) return 'fa-file-alt';
+      return 'fa-file';
+    }
+
+    function formatBytes(bytes) {
+      if (!bytes) return '0 B';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function viewAttachment(attachmentId, filename, mimeType) {
+      currentAttachmentId = attachmentId;
+      const modal = document.getElementById('attachment-modal');
+      const titleFilename = document.getElementById('attachment-filename');
+      const content = document.getElementById('modal-content');
+
+      titleFilename.textContent = filename;
+      const url = `/api/attachments/${attachmentId}`;
+
+      content.innerHTML = '<div class="text-center py-8"><i class="fas fa-spinner fa-spin text-2xl text-indigo-400"></i></div>';
+
+      fetch(`/api/attachments/${attachmentId}/preview`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.mime_type && data.mime_type.startsWith('image/')) {
+            content.innerHTML = `<img src="${url}" class="image-preview mx-auto" alt="${filename}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%231e293b\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%2394a3b8\'%3EImage Error%3C/text%3E%3C/svg%3E'">`;
+          } else if (data.mime_type === 'application/pdf') {
+            content.innerHTML = `<iframe src="${url}#toolbar=0" class="pdf-viewer"></iframe>`;
+          } else {
+            content.innerHTML = `
+              <div class="text-center mb-4">
+                <i class="fas ${getFileIcon(data.mime_type)} text-6xl text-slate-400 mb-2"></i>
+                <p class="text-slate-400">This file type cannot be previewed directly.</p>
+              </div>
+              ${data.preview && data.preview !== 'No text extracted' ? `
+                <div class="mt-4">
+                  <h4 class="font-medium mb-2 text-slate-300">Extracted Text Preview:</h4>
+                  <pre class="bg-slate-700/50 p-4 rounded-lg overflow-auto max-h-96 text-sm text-slate-300 border border-slate-600">${data.preview}</pre>
+                </div>
+              ` : ''}
+              <div class="text-center mt-4">
+                <a href="${url}" download class="btn-primary inline-block px-6 py-3 rounded-lg">
+                  <i class="fas fa-download mr-2"></i>Download ${filename}
+                </a>
+              </div>
+            `;
+          }
+
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        })
+        .catch(err => {
+          content.innerHTML = `
+            <div class="text-center text-rose-400">
+              <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
+              <p>Failed to load attachment preview</p>
+              <a href="${url}" download class="btn-primary inline-block mt-4 px-6 py-3 rounded-lg">
+                <i class="fas fa-download mr-2"></i>Download File
+              </a>
+            </div>
+          `;
+        });
+    }
+
+    function downloadCurrentAttachment() {
+      if (currentAttachmentId) {
+        downloadAttachment(currentAttachmentId);
+      }
+    }
+
+    function downloadAttachment(attachmentId) {
+      window.open(`/api/attachments/${attachmentId}`, '_blank');
+    }
+
+    function closeAttachmentModal() {
+      const modal = document.getElementById('attachment-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      currentAttachmentId = null;
+    }
+
+    function closeAttachmentModalOnBackdrop(event) {
+      if (event.target === document.getElementById('attachment-modal')) {
+        closeAttachmentModal();
+      }
+    }
+
+    async function sendReply(messageId) {
+      const replyText = document.getElementById('reply-text').value;
+      if (!replyText.trim()) {
+        alert('Please enter a reply message');
+        return;
+      }
+
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/inbox/${messageId}/reply`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reply_text: replyText })
+        });
+
+        if (res.ok) {
+          alert('✓ Reply sent successfully!');
+          viewEmail(messageId);
+        } else {
+          const err = await res.json();
+          alert('Failed to send reply: ' + (err.error || 'Unknown error'));
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
+      } catch (e) {
+        alert('Failed to send reply: ' + e.message);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    async function fetchNow() {
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Fetching...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/fetch-now', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          alert(`✓ ${data.message}`);
+          if (currentPage === 'inbox') loadInbox();
+          if (currentPage === 'dashboard') loadDashboard();
+          loadStats();
+          loadStatus();
+        } else {
+          alert('Error: ' + (data.error || 'Unknown error'));
+        }
+      } catch (e) {
+        alert('Failed to fetch emails: ' + e.message);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    async function loadStudents() {
+      try {
+        const res = await fetch('/api/students');
+        const students = await res.json();
+
+        const div = document.getElementById('students-list');
+        if (students.length === 0) {
+          div.innerHTML = '<p class="text-center py-8 text-slate-400">No students in database. Click "Load Demo Data" to add sample students.</p>';
+          return;
+        }
+
+        div.innerHTML = `
+          <table class="w-full">
+            <thead class="table-header">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">ID</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Name</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Email</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Department</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase">Attendance</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${students.map(s => `
+                <tr class="table-row">
+                  <td class="px-4 py-3 font-mono text-sm text-slate-300">${s.student_id}</td>
+                  <td class="px-4 py-3 font-medium text-slate-200">${s.name}</td>
+                  <td class="px-4 py-3 text-sm text-slate-300">${s.email}</td>
+                  <td class="px-4 py-3 text-slate-300">${s.department}</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                      <div class="w-24 bg-slate-700 rounded-full h-2">
+                        <div class="bg-${s.attendance_percentage >= 75 ? 'emerald' : s.attendance_percentage >= 65 ? 'amber' : 'rose'}-400 h-2 rounded-full"
+                          style="width: ${s.attendance_percentage}%"></div>
+                      </div>
+                      <span class="text-sm ${s.attendance_percentage >= 75 ? 'text-emerald-400' : s.attendance_percentage >= 65 ? 'text-amber-400' : 'text-rose-400'}">
+                        ${s.attendance_percentage}%
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (e) {
+        console.error('Failed to load students:', e);
+      }
+    }
+
+    async function seedDemoData() {
+      try {
+        const res = await fetch('/api/seed-demo', { method: 'POST' });
+        if (res.ok) {
+          loadStudents();
+          alert('✓ Demo data loaded! 5 sample students added.');
+        }
+      } catch (e) {
+        alert('Failed to load demo data: ' + e.message);
+      }
+    }
+  </script>
+</body>
+
+</html>
