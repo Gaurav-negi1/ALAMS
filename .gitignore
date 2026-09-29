@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+backend/credentials.json
+backend/token.json
+data/config.json
+
+# Runtime data
+data/*.db
+data/*.db-*
+logs/
+uploads/
+
+# Node.js dependencies
+node_modules/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
