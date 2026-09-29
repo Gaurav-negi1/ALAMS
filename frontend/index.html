@@ -103,32 +103,16 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #1e293b;
-      border-radius: 4px;
-    }
-
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #1e293b; border-radius: 4px; }
     ::-webkit-scrollbar-thumb {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       border-radius: 4px;
     }
-
     ::-webkit-scrollbar-thumb:hover {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     }
@@ -144,9 +128,7 @@
       transition: all 0.2s ease;
     }
 
-    .table-row:hover {
-      background: rgba(51, 65, 85, 0.3);
-    }
+    .table-row:hover { background: rgba(51, 65, 85, 0.3); }
 
     .dark-input {
       background: rgba(51, 65, 85, 0.5);
@@ -162,9 +144,7 @@
       background: rgba(51, 65, 85, 0.8);
     }
 
-    .dark-input::placeholder {
-      color: #64748b;
-    }
+    .dark-input::placeholder { color: #64748b; }
 
     .dark-select {
       background: rgba(51, 65, 85, 0.5);
@@ -173,9 +153,7 @@
       backdrop-filter: blur(8px);
     }
 
-    .dark-select option {
-      background: #1e293b;
-    }
+    .dark-select option { background: #1e293b; }
 
     .btn-primary {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
@@ -249,44 +227,22 @@
       box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
     }
 
-    .status-dot {
-      box-shadow: 0 0 10px currentColor;
-    }
+    .status-dot { box-shadow: 0 0 10px currentColor; }
 
-    .pulse-success {
-      animation: pulse-success 2s infinite;
-    }
+    .pulse-success { animation: pulse-success 2s infinite; }
 
     @keyframes pulse-success {
-      0% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-      }
-
-      70% {
-        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
-      }
-
-      100% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-      }
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
-    .pulse-warning {
-      animation: pulse-warning 2s infinite;
-    }
+    .pulse-warning { animation: pulse-warning 2s infinite; }
 
     @keyframes pulse-warning {
-      0% {
-        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
-      }
-
-      70% {
-        box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
-      }
-
-      100% {
-        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-      }
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
     }
   </style>
 </head>
@@ -297,8 +253,7 @@
     <div class="w-72 glass-sidebar">
       <div class="p-6">
         <div class="flex items-center gap-3 mb-8">
-          <div
-            class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
             <i class="fas fa-robot text-white text-xl"></i>
           </div>
           <div>
@@ -313,8 +268,7 @@
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-sm flex items-center gap-2">
-                <i class="fas fa-brain text-indigo-400"></i>
-                Groq
+                <i class="fas fa-brain text-indigo-400"></i> Groq
               </span>
               <span class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 status-dot pulse-success"></span>
@@ -323,8 +277,7 @@
             </div>
             <div class="flex items-center justify-between">
               <span class="text-sm flex items-center gap-2">
-                <i class="fab fa-google text-blue-400"></i>
-                Gemini
+                <i class="fab fa-google text-blue-400"></i> Gemini
               </span>
               <span class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full" id="sidebar-gemini-status"></span>
@@ -333,8 +286,7 @@
             </div>
             <div class="flex items-center justify-between">
               <span class="text-sm flex items-center gap-2">
-                <i class="fas fa-envelope text-rose-400"></i>
-                Gmail
+                <i class="fas fa-envelope text-rose-400"></i> Gmail
               </span>
               <span class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full" id="sidebar-gmail-status"></span>
@@ -346,43 +298,35 @@
 
         <!-- Navigation -->
         <nav class="space-y-1">
-          <a href="#" onclick="showPage('dashboard'); return false;"
-            class="nav-item active flex items-center px-4 py-3 rounded-lg text-slate-300">
+          <a href="#" onclick="showPage('dashboard'); return false;" class="nav-item active flex items-center px-4 py-3 rounded-lg text-slate-300">
             <i class="fas fa-chart-pie w-6 text-indigo-400"></i>
             <span class="font-medium">Dashboard</span>
           </a>
-          <a href="#" onclick="showPage('inbox'); return false;"
-            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+          <a href="#" onclick="showPage('inbox'); return false;" class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
             <i class="fas fa-inbox w-6 text-blue-400"></i>
             <span class="font-medium">Smart Inbox</span>
           </a>
-          <a href="#" onclick="showPage('students'); return false;"
-            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+          <a href="#" onclick="showPage('students'); return false;" class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
             <i class="fas fa-users w-6 text-emerald-400"></i>
             <span class="font-medium">Student Hub</span>
           </a>
-          <a href="#" onclick="showPage('settings'); return false;"
-            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+          <a href="#" onclick="showPage('settings'); return false;" class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
             <i class="fas fa-cog w-6 text-purple-400"></i>
             <span class="font-medium">Settings</span>
           </a>
-          <a href="#" onclick="showPage('policies'); return false;"
-            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+          <a href="#" onclick="showPage('policies'); return false;" class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
             <i class="fas fa-shield-alt w-6 text-amber-400"></i>
             <span class="font-medium">Policies</span>
           </a>
-          <a href="#" onclick="showPage('database-view'); return false;"
-            class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
+          <a href="#" onclick="showPage('database-view'); return false;" class="nav-item flex items-center px-4 py-3 rounded-lg text-slate-300">
             <i class="fas fa-database w-6 text-teal-400"></i>
             <span class="font-medium">Database</span>
           </a>
         </nav>
       </div>
 
-      <!-- Quick Action Footer -->
       <div class="absolute bottom-0 left-0 w-72 p-6 border-t border-slate-700/50">
-        <button onclick="fetchNow()"
-          class="w-full btn-primary px-4 py-3 rounded-xl flex items-center justify-center gap-2">
+        <button onclick="fetchNow()" class="w-full btn-primary px-4 py-3 rounded-xl flex items-center justify-center gap-2">
           <i class="fas fa-bolt"></i>
           <span>Quick Fetch Emails</span>
         </button>
@@ -405,7 +349,6 @@
           </button>
         </div>
 
-        <!-- Stats Grid -->
         <div class="grid grid-cols-4 gap-6 mb-8">
           <div class="stat-card rounded-xl p-6 cursor-pointer" onclick="showPage('inbox')">
             <div class="flex items-center justify-between mb-4">
@@ -448,11 +391,9 @@
           </div>
         </div>
 
-        <!-- System Status -->
         <div class="glass-card rounded-xl p-6 mb-8">
           <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-            <i class="fas fa-heartbeat text-rose-400"></i>
-            System Status
+            <i class="fas fa-heartbeat text-rose-400"></i> System Status
           </h3>
           <div class="grid grid-cols-3 gap-6">
             <div class="flex items-center gap-3">
@@ -471,11 +412,9 @@
           <div class="mt-4 text-sm text-slate-400" id="poller-status"></div>
         </div>
 
-        <!-- Recent Emails -->
         <div class="glass-card rounded-xl p-6">
           <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-            <i class="fas fa-clock-rotate-left text-indigo-400"></i>
-            Recent Activity
+            <i class="fas fa-clock-rotate-left text-indigo-400"></i> Recent Activity
           </h3>
           <div id="recent-emails"></div>
         </div>
@@ -495,7 +434,6 @@
           </button>
         </div>
 
-        <!-- Filters -->
         <div class="glass-card rounded-xl p-4 mb-6">
           <div class="flex gap-4">
             <select id="filter-intent" class="dark-select rounded-lg px-4 py-2.5 flex-1">
@@ -517,8 +455,7 @@
             <button onclick="loadInbox()" class="btn-primary px-6 py-2.5 rounded-lg">
               <i class="fas fa-filter mr-2"></i>Apply
             </button>
-            <button onclick="clearFilters()"
-              class="px-6 py-2.5 rounded-lg border border-slate-600 hover:bg-slate-700/50">
+            <button onclick="clearFilters()" class="px-6 py-2.5 rounded-lg border border-slate-600 hover:bg-slate-700/50">
               Clear
             </button>
           </div>
@@ -531,8 +468,7 @@
 
       <!-- Email Detail Page -->
       <div id="email-detail-page" class="page hidden">
-        <button onclick="showPage('inbox'); return false;"
-          class="mb-4 text-indigo-400 hover:text-indigo-300 flex items-center gap-2">
+        <button onclick="showPage('inbox'); return false;" class="mb-4 text-indigo-400 hover:text-indigo-300 flex items-center gap-2">
           <i class="fas fa-arrow-left"></i>
           <span>Back to Inbox</span>
         </button>
@@ -562,12 +498,11 @@
       </div>
       <!-- END Students Page -->
 
-      <!-- Settings Page (self-contained, no nested pages) -->
+      <!-- Settings Page -->
       <div id="settings-page" class="page hidden">
         <h2 class="text-3xl font-bold gradient-text mb-8">Settings</h2>
 
         <div class="glass-card rounded-xl p-6 space-y-8">
-          <!-- API Status Overview -->
           <div class="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 p-6 rounded-xl border border-indigo-500/20">
             <h3 class="font-bold text-lg mb-4">API Status</h3>
             <div class="grid grid-cols-3 gap-6">
@@ -589,40 +524,30 @@
             </div>
           </div>
 
-          <!-- Groq API -->
           <div class="border border-slate-700 rounded-xl p-6">
             <label class="block text-sm font-medium mb-3 text-slate-300">
-              <i class="fas fa-brain text-indigo-400 mr-2"></i>
-              Groq API Key
+              <i class="fas fa-brain text-indigo-400 mr-2"></i> Groq API Key
             </label>
             <div class="flex gap-3">
-              <input type="password" id="groq-key" class="dark-input flex-1 rounded-lg px-4 py-3"
-                placeholder="Enter Groq API Key">
-              <button onclick="togglePassword('groq-key')"
-                class="px-4 py-3 border border-slate-600 rounded-lg hover:bg-slate-700/50">
+              <input type="password" id="groq-key" class="dark-input flex-1 rounded-lg px-4 py-3" placeholder="Enter Groq API Key">
+              <button onclick="togglePassword('groq-key')" class="px-4 py-3 border border-slate-600 rounded-lg hover:bg-slate-700/50">
                 <i class="fas fa-eye"></i>
               </button>
             </div>
             <p class="text-sm text-slate-400 mt-2">
-              Get your key from <a href="https://console.groq.com" target="_blank"
-                class="text-indigo-400 hover:underline">console.groq.com</a>
+              Get your key from <a href="https://console.groq.com" target="_blank" class="text-indigo-400 hover:underline">console.groq.com</a>
               <span class="ml-2 text-xs bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-full">LLaMA 3.3 70B</span>
             </p>
           </div>
 
-          <!-- Gemini API -->
           <div class="border border-slate-700 rounded-xl p-6 bg-gradient-to-r from-blue-500/5 to-transparent">
             <label class="block text-sm font-medium mb-3 text-slate-300">
-              <i class="fab fa-google text-blue-400 mr-2"></i>
-              Gemini API Key
-              <span class="ml-2 text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">Vision & PDF
-                Analysis</span>
+              <i class="fab fa-google text-blue-400 mr-2"></i> Gemini API Key
+              <span class="ml-2 text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">Vision & PDF Analysis</span>
             </label>
             <div class="flex gap-3">
-              <input type="password" id="gemini-key" class="dark-input flex-1 rounded-lg px-4 py-3"
-                placeholder="Enter Gemini API Key">
-              <button onclick="togglePassword('gemini-key')"
-                class="px-4 py-3 border border-slate-600 rounded-lg hover:bg-slate-700/50">
+              <input type="password" id="gemini-key" class="dark-input flex-1 rounded-lg px-4 py-3" placeholder="Enter Gemini API Key">
+              <button onclick="togglePassword('gemini-key')" class="px-4 py-3 border border-slate-600 rounded-lg hover:bg-slate-700/50">
                 <i class="fas fa-eye"></i>
               </button>
               <button onclick="testGemini()" class="btn-primary px-6 py-3 rounded-lg">
@@ -630,36 +555,30 @@
               </button>
             </div>
             <p class="text-sm text-slate-400 mt-2">
-              Get your free key from <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                class="text-indigo-400 hover:underline">aistudio.google.com</a>
+              Get your free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-indigo-400 hover:underline">aistudio.google.com</a>
             </p>
           </div>
 
-          <!-- Gmail Connection -->
           <div class="border border-slate-700 rounded-xl p-6">
             <label class="block text-sm font-medium mb-3 text-slate-300">
-              <i class="fas fa-envelope text-rose-400 mr-2"></i>
-              Gmail Connection
+              <i class="fas fa-envelope text-rose-400 mr-2"></i> Gmail Connection
             </label>
             <div class="space-y-4">
               <div class="flex gap-3">
                 <button onclick="connectGmail()" class="btn-danger px-6 py-3 rounded-lg">
                   <i class="fab fa-google mr-2"></i>1. Run OAuth Setup
                 </button>
-                <button onclick="clearGmailToken()"
-                  class="px-6 py-3 border border-rose-500 text-rose-400 rounded-lg hover:bg-rose-500/10">
+                <button onclick="clearGmailToken()" class="px-6 py-3 border border-rose-500 text-rose-400 rounded-lg hover:bg-rose-500/10">
                   <i class="fas fa-trash mr-2"></i>Clear Token
                 </button>
               </div>
-              <textarea id="gmail-token" class="dark-input w-full rounded-lg px-4 py-3 font-mono text-sm" rows="4"
-                placeholder="2. Paste Gmail token JSON here"></textarea>
+              <textarea id="gmail-token" class="dark-input w-full rounded-lg px-4 py-3 font-mono text-sm" rows="4" placeholder="2. Paste Gmail token JSON here"></textarea>
               <button onclick="saveGmailToken()" class="btn-primary px-6 py-3 rounded-lg">
                 <i class="fas fa-save mr-2"></i>3. Save Token
               </button>
             </div>
           </div>
 
-          <!-- Automation Settings -->
           <div class="border border-slate-700 rounded-xl p-6">
             <h3 class="font-bold text-lg mb-4">Automation Settings</h3>
             <div class="space-y-4">
@@ -687,7 +606,7 @@
       </div>
       <!-- END Settings Page -->
 
-      <!-- ==================== Policy Manager Page (sibling, not nested) ==================== -->
+      <!-- Policy Manager Page -->
       <div id="policies-page" class="page hidden">
         <div class="flex justify-between items-center mb-8">
           <div>
@@ -707,26 +626,22 @@
             <div class="space-y-4">
               <div>
                 <label class="block text-sm font-medium mb-2 text-slate-300">Minimum Attendance (%)</label>
-                <input type="number" id="policy-min-attendance" class="dark-input w-full rounded-lg px-4 py-3" min="0"
-                  max="100" step="0.1" value="75.0">
+                <input type="number" id="policy-min-attendance" class="dark-input w-full rounded-lg px-4 py-3" min="0" max="100" step="0.1" value="75.0">
                 <p class="text-xs text-slate-400 mt-1">Students below this cannot get leave approved</p>
               </div>
               <div>
                 <label class="block text-sm font-medium mb-2 text-slate-300">Critical Attendance (%)</label>
-                <input type="number" id="policy-critical-attendance" class="dark-input w-full rounded-lg px-4 py-3"
-                  min="0" max="100" step="0.1" value="65.0">
+                <input type="number" id="policy-critical-attendance" class="dark-input w-full rounded-lg px-4 py-3" min="0" max="100" step="0.1" value="65.0">
                 <p class="text-xs text-slate-400 mt-1">Auto-reject all leave requests below this</p>
               </div>
               <div>
                 <label class="block text-sm font-medium mb-2 text-slate-300">Max Medical Leave Days</label>
-                <input type="number" id="policy-max-medical-days" class="dark-input w-full rounded-lg px-4 py-3" min="1"
-                  max="30" value="5">
+                <input type="number" id="policy-max-medical-days" class="dark-input w-full rounded-lg px-4 py-3" min="1" max="30" value="5">
                 <p class="text-xs text-slate-400 mt-1">Without HOD approval</p>
               </div>
               <div>
                 <label class="block text-sm font-medium mb-2 text-slate-300">Max Personal Leave Days</label>
-                <input type="number" id="policy-max-personal-days" class="dark-input w-full rounded-lg px-4 py-3"
-                  min="1" max="30" value="3">
+                <input type="number" id="policy-max-personal-days" class="dark-input w-full rounded-lg px-4 py-3" min="1" max="30" value="3">
                 <p class="text-xs text-slate-400 mt-1">Per semester</p>
               </div>
             </div>
@@ -744,9 +659,7 @@
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input type="checkbox" id="policy-auto-poll-enabled" class="sr-only peer">
-                  <div
-                    class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600">
-                  </div>
+                  <div class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
                 </label>
               </div>
               <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
@@ -756,15 +669,12 @@
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input type="checkbox" id="policy-auto-reply-enabled" class="sr-only peer">
-                  <div
-                    class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600">
-                  </div>
+                  <div class="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
                 </label>
               </div>
               <div>
                 <label class="block text-sm font-medium mb-2 text-slate-300">Poll Interval (minutes)</label>
-                <input type="number" id="policy-poll-interval-minutes" class="dark-input w-full rounded-lg px-4 py-3"
-                  min="1" max="60" value="5">
+                <input type="number" id="policy-poll-interval-minutes" class="dark-input w-full rounded-lg px-4 py-3" min="1" max="60" value="5">
               </div>
             </div>
           </div>
@@ -779,7 +689,7 @@
       </div>
       <!-- END Policy Manager Page -->
 
-      <!-- ==================== Database View Page (sibling, not nested) ==================== -->
+      <!-- Database View Page -->
       <div id="database-view-page" class="page hidden">
         <div class="flex justify-between items-center mb-8">
           <div>
@@ -787,8 +697,7 @@
             <p class="text-slate-400 mt-1">Student records, emails, and attendance data</p>
           </div>
           <div class="flex gap-3">
-            <button onclick="document.getElementById('excel-upload').click()"
-              class="btn-success px-6 py-3 rounded-xl flex items-center gap-2">
+            <button onclick="document.getElementById('excel-upload').click()" class="btn-success px-6 py-3 rounded-xl flex items-center gap-2">
               <i class="fas fa-upload"></i><span>Import Excel</span>
             </button>
             <input type="file" id="excel-upload" accept=".xlsx,.xls" class="hidden" onchange="importExcelFile(this)">
@@ -825,9 +734,7 @@
           <div class="flex gap-4">
             <div class="flex-1 relative">
               <i class="fas fa-search absolute left-3 top-3 text-slate-400"></i>
-              <input type="text" id="db-search" placeholder="Search by name, email, USN, subject..."
-                class="w-full bg-slate-700 border border-slate-600 rounded-lg pl-10 pr-4 py-2"
-                onkeyup="loadDatabaseView()">
+              <input type="text" id="db-search" placeholder="Search by name, email, USN, subject..." class="w-full bg-slate-700 border border-slate-600 rounded-lg pl-10 pr-4 py-2" onkeyup="loadDatabaseView()">
             </div>
           </div>
         </div>
@@ -861,14 +768,11 @@
       <!-- END Database View Page -->
 
     </div>
-    <!-- ==================== END MAIN CONTENT AREA ==================== -->
 
   </div>
-  <!-- End of flex h-screen -->
 
   <!-- Attachment Viewer Modal -->
-  <div id="attachment-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50"
-    onclick="closeAttachmentModalOnBackdrop(event)">
+  <div id="attachment-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50" onclick="closeAttachmentModalOnBackdrop(event)">
     <div class="glass-card rounded-xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
       <div class="p-4 border-b border-slate-700 flex justify-between items-center">
         <h3 class="font-bold text-lg flex items-center gap-2">
@@ -889,6 +793,14 @@
   </div>
 
   <script>
+    // ========== API CONFIGURATION ==========
+    // Point all API requests to the deployed Render backend.
+    // If you're running the backend locally, change this to 'http://localhost:5000'.
+    const API_BASE = 'https://alams-1g01.onrender.com';
+
+    // Helper: prefix any /api/... path with the backend URL.
+    const api = (path) => API_BASE + path;
+
     // ========== GLOBAL VARIABLES ==========
     let currentPage = 'dashboard';
     let currentMessageId = null;
@@ -933,7 +845,7 @@
 
     async function loadConfig() {
       try {
-        const res = await fetch('/api/config');
+        const res = await fetch(api('/api/config'));
         const cfg = await res.json();
 
         document.getElementById('auto-poll').checked = cfg.auto_poll;
@@ -977,7 +889,7 @@
 
     async function loadPolicies() {
       try {
-        const res = await fetch('/api/policies');
+        const res = await fetch(api('/api/policies'));
         const data = await res.json();
         if (data.success) {
           data.policies.forEach(policy => {
@@ -1009,7 +921,7 @@
       };
 
       try {
-        const res = await fetch('/api/policies', {
+        const res = await fetch(api('/api/policies'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ policies })
@@ -1030,7 +942,7 @@
 
     async function reloadPolicies() {
       try {
-        const res = await fetch('/api/policies/reload', { method: 'POST' });
+        const res = await fetch(api('/api/policies/reload'), { method: 'POST' });
         const data = await res.json();
         if (data.success) {
           alert('✓ Policies reloaded!');
@@ -1049,7 +961,7 @@
       const formData = new FormData();
       formData.append('file', file);
       try {
-        const res = await fetch('/api/students/import-excel', { method: 'POST', body: formData });
+        const res = await fetch(api('/api/students/import-excel'), { method: 'POST', body: formData });
         const data = await res.json();
         if (data.success) {
           alert('✓ ' + data.message);
@@ -1065,14 +977,14 @@
     }
 
     function exportStudentsExcel() {
-      window.open('/api/students/export-excel', '_blank');
+      window.open(api('/api/students/export-excel'), '_blank');
     }
 
     // ========== DATABASE VIEW ==========
 
     async function loadDatabaseStats() {
       try {
-        const res = await fetch('/api/database/stats');
+        const res = await fetch(api('/api/database/stats'));
         const data = await res.json();
         if (data.success) {
           document.getElementById('db-total-emails').textContent = data.stats.total_emails || 0;
@@ -1093,7 +1005,7 @@
       const search = document.getElementById('db-search')?.value || '';
       try {
         const params = new URLSearchParams({ search, page, limit: 50 });
-        const res = await fetch('/api/database/emails?' + params);
+        const res = await fetch(api('/api/database/emails?' + params));
         const data = await res.json();
         const tbody = document.getElementById('db-emails-table');
         if (!data.emails || data.emails.length === 0) {
@@ -1140,7 +1052,7 @@
 
     async function viewStudentAttendance(email) {
       try {
-        const res = await fetch(`/api/students/${email}/attendance`);
+        const res = await fetch(api(`/api/students/${email}/attendance`));
         const data = await res.json();
         if (data.success) {
           const student = data.data.student;
@@ -1175,7 +1087,7 @@
       };
 
       try {
-        const res = await fetch('/api/config', {
+        const res = await fetch(api('/api/config'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -1208,7 +1120,7 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch('/api/config/test-gemini', {
+        const res = await fetch(api('/api/config/test-gemini'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -1228,7 +1140,7 @@
 
     async function clearGmailToken() {
       if (confirm('Are you sure you want to disconnect Gmail?')) {
-        await fetch('/api/config/clear-gmail', { method: 'POST' });
+        await fetch(api('/api/config/clear-gmail'), { method: 'POST' });
         document.getElementById('gmail-token').value = '';
         document.getElementById('gmail-token').placeholder = 'Paste Gmail token JSON here';
         loadConfig();
@@ -1250,7 +1162,7 @@
       const token = document.getElementById('gmail-token').value;
       try {
         const data = JSON.parse(token);
-        const res = await fetch('/api/config', {
+        const res = await fetch(api('/api/config'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ gmail_token: data })
@@ -1270,7 +1182,7 @@
 
     async function loadStats() {
       try {
-        const res = await fetch('/api/stats');
+        const res = await fetch(api('/api/stats'));
         const stats = await res.json();
         document.getElementById('stat-total').textContent = stats.total || 0;
         document.getElementById('stat-approved').textContent = stats.approved || 0;
@@ -1283,7 +1195,7 @@
 
     async function loadStatus() {
       try {
-        const res = await fetch('/api/status');
+        const res = await fetch(api('/api/status'));
         const status = await res.json();
 
         updateStatusDot('status-gemini', status.gemini_ready);
@@ -1328,7 +1240,7 @@
       await loadStatus();
 
       try {
-        const res = await fetch('/api/stats');
+        const res = await fetch(api('/api/stats'));
         const stats = await res.json();
         const recentDiv = document.getElementById('recent-emails');
 
@@ -1364,7 +1276,7 @@
 
       try {
         const params = new URLSearchParams({ intent, decision, page, limit: 20 });
-        const res = await fetch('/api/inbox?' + params);
+        const res = await fetch(api('/api/inbox?' + params));
         const data = await res.json();
 
         const listDiv = document.getElementById('inbox-list');
@@ -1432,10 +1344,11 @@
         console.error('Failed to load inbox:', e);
       }
     }
+
     async function clearAllStudents() {
       if (!confirm('Are you sure you want to delete ALL student records? This cannot be undone.')) return;
       try {
-        const res = await fetch('/api/students/clear', { method: 'POST' });
+        const res = await fetch(api('/api/students/clear'), { method: 'POST' });
         const data = await res.json();
         if (data.success) {
           alert('✓ All students deleted.');
@@ -1498,7 +1411,7 @@
     async function viewEmail(messageId) {
       currentMessageId = messageId;
       try {
-        const res = await fetch(`/api/inbox/${messageId}`);
+        const res = await fetch(api(`/api/inbox/${messageId}`));
         const email = await res.json();
 
         const contentDiv = document.getElementById('email-detail-content');
@@ -1526,8 +1439,7 @@
 
             <div>
               <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
-                <i class="fas fa-envelope text-indigo-400"></i>
-                Email Body
+                <i class="fas fa-envelope text-indigo-400"></i> Email Body
               </h4>
               <div class="bg-slate-700/30 p-4 rounded-lg whitespace-pre-wrap text-slate-300 border border-slate-700">${email.body_snippet || '(No body content)'}</div>
             </div>
@@ -1535,8 +1447,7 @@
             ${email.attachments && email.attachments.length > 0 ? `
               <div>
                 <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
-                  <i class="fas fa-paperclip text-blue-400"></i>
-                  Attachments (${email.attachments.length})
+                  <i class="fas fa-paperclip text-blue-400"></i> Attachments (${email.attachments.length})
                 </h4>
                 <div class="grid gap-3">
                   ${email.attachments.map((att, i) => `
@@ -1580,8 +1491,7 @@
 
             <div>
               <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
-                <i class="fas fa-chart-line text-purple-400"></i>
-                AI Analysis
+                <i class="fas fa-chart-line text-purple-400"></i> AI Analysis
               </h4>
               <div class="grid grid-cols-2 gap-4 bg-slate-700/30 p-4 rounded-lg border border-slate-700">
                 <div>
@@ -1602,8 +1512,7 @@
             <!-- PROFESSOR OVERRIDE CONSOLE -->
             <div class="override-console rounded-xl p-5">
               <h4 class="font-bold mb-4 text-purple-300 flex items-center gap-2">
-                <i class="fas fa-user-shield"></i>
-                Professor Override Console
+                <i class="fas fa-user-shield"></i> Professor Override Console
                 <span class="text-xs bg-purple-500/30 text-purple-200 px-2 py-0.5 rounded-full">Admin Only</span>
               </h4>
               <div class="space-y-4">
@@ -1621,7 +1530,6 @@
                     placeholder="Reason for overriding the AI decision..." onkeyup="previewOverrideReply('${email.message_id}')"></textarea>
                 </div>
 
-                <!-- Reply Preview -->
                 <div class="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
                   <label class="block text-sm font-medium mb-2 text-slate-300 flex items-center justify-between">
                     <span><i class="fas fa-envelope mr-2"></i>Reply Preview</span>
@@ -1635,15 +1543,13 @@
                 <div class="flex items-center gap-3 p-3 bg-slate-700/30 rounded-lg">
                   <input type="checkbox" id="send-reply-${email.message_id}" checked class="w-4 h-4 rounded">
                   <label for="send-reply-${email.message_id}" class="text-sm text-slate-300">
-                    <i class="fas fa-paper-plane mr-1 text-emerald-400"></i>
-                    Send reply email to student
+                    <i class="fas fa-paper-plane mr-1 text-emerald-400"></i> Send reply email to student
                   </label>
                 </div>
 
                 <button onclick="executeOverride('${email.message_id}')"
                   class="btn-warning w-full px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
-                  <i class="fas fa-gavel"></i>
-                  Execute Override & Update Database
+                  <i class="fas fa-gavel"></i> Execute Override & Update Database
                 </button>
                 <p class="text-xs text-slate-400 text-center">This will permanently override the AI decision, update attendance records, and send a new reply.</p>
               </div>
@@ -1652,8 +1558,7 @@
             ${email.decision !== 'NO_ACTION' && !email.replied ? `
               <div>
                 <h4 class="font-bold mb-3 text-slate-200 flex items-center gap-2">
-                  <i class="fas fa-reply text-emerald-400"></i>
-                  Reply
+                  <i class="fas fa-reply text-emerald-400"></i> Reply
                 </h4>
                 <textarea id="reply-text" class="dark-input w-full rounded-lg p-4 font-mono text-sm" rows="6">${email.reply_text || ''}</textarea>
                 <div class="mt-3">
@@ -1735,7 +1640,7 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch(`/api/inbox/${messageId}/override`, {
+        const res = await fetch(api(`/api/inbox/${messageId}/override`), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1810,11 +1715,11 @@
       const content = document.getElementById('modal-content');
 
       titleFilename.textContent = filename;
-      const url = `/api/attachments/${attachmentId}`;
+      const url = api(`/api/attachments/${attachmentId}`);
 
       content.innerHTML = '<div class="text-center py-8"><i class="fas fa-spinner fa-spin text-2xl text-indigo-400"></i></div>';
 
-      fetch(`/api/attachments/${attachmentId}/preview`)
+      fetch(api(`/api/attachments/${attachmentId}/preview`))
         .then(r => r.json())
         .then(data => {
           if (data.mime_type && data.mime_type.startsWith('image/')) {
@@ -1864,7 +1769,7 @@
     }
 
     function downloadAttachment(attachmentId) {
-      window.open(`/api/attachments/${attachmentId}`, '_blank');
+      window.open(api(`/api/attachments/${attachmentId}`), '_blank');
     }
 
     function closeAttachmentModal() {
@@ -1893,7 +1798,7 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch(`/api/inbox/${messageId}/reply`, {
+        const res = await fetch(api(`/api/inbox/${messageId}/reply`), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ reply_text: replyText })
@@ -1922,7 +1827,7 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch('/api/fetch-now', { method: 'POST' });
+        const res = await fetch(api('/api/fetch-now'), { method: 'POST' });
         const data = await res.json();
         if (data.success) {
           alert(`✓ ${data.message}`);
@@ -1943,7 +1848,7 @@
 
     async function loadStudents() {
       try {
-        const res = await fetch('/api/students');
+        const res = await fetch(api('/api/students'));
         const students = await res.json();
 
         const div = document.getElementById('students-list');
@@ -1993,7 +1898,7 @@
 
     async function seedDemoData() {
       try {
-        const res = await fetch('/api/seed-demo', { method: 'POST' });
+        const res = await fetch(api('/api/seed-demo'), { method: 'POST' });
         if (res.ok) {
           loadStudents();
           alert('✓ Demo data loaded! 5 sample students added.');
